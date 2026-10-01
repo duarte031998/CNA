@@ -1,0 +1,18 @@
+{
+  "name": "cna-guia-setup",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Guía interactiva de CNA Sistemas para la configuración inicial de laptops con Windows 11.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
