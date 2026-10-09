@@ -18,12 +18,22 @@ public/
   css/styles.css    estilos (colores y tipografías de marca en :root)
   js/content.js     TODO el contenido: textos, valores y capturas
   js/app.js         renderizado y navegación
-  img/              capturas de pantalla
+  img/screens/      pantallas de Windows 11 recreadas (generadas)
+screens/            fuente de las pantallas: screens.js (HTML), oobe.css y render.js
 server.js           servidor Express (opcional) para servir public/
 test/               pruebas (node --test)
 ```
 
 Para cambiar un texto, un valor o una captura, edita solo `public/js/content.js`.
+
+## Pantallas de Windows 11
+
+Las imágenes de cada paso no son fotos ni capturas de terceros: son recreaciones de la configuración de Windows 11 hechas en HTML/CSS (`screens/`), con la opción que hay que elegir resaltada en azul. Para cambiarlas, edita `screens/screens.js` o `screens/oobe.css` y vuelve a generarlas:
+
+```bash
+npx playwright install chromium   # solo la primera vez
+npm run screens                   # escribe public/img/screens/*.jpg
+```
 
 ## Uso local
 

@@ -1,0 +1,88 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1000px; height: 625px; overflow: hidden; }
+body {
+  font-family: 'Inter', 'Segoe UI Variable', 'Segoe UI', sans-serif;
+  color: #1a1a1a;
+  position: relative;
+  background:
+    radial-gradient(700px 420px at 15% 0%, #d8e6f8 0%, transparent 70%),
+    radial-gradient(600px 400px at 100% 100%, #cfe0f5 0%, transparent 70%),
+    linear-gradient(135deg, #eef3fa, #e4ecf7);
+}
+
+.card {
+  position: absolute; inset: 34px 42px 46px;
+  display: flex; border-radius: 10px; background: rgba(255, 255, 255, .92);
+  box-shadow: 0 8px 32px rgba(0, 40, 90, .12), 0 0 0 1px rgba(0, 0, 0, .05);
+}
+.left { flex: 0 0 42%; padding: 46px 38px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.illus { width: 128px; height: 128px; margin: 12px 0 26px; }
+.illus svg { width: 100%; height: 100%; }
+h1 { font-size: 23px; line-height: 1.3; font-weight: 600; letter-spacing: -.01em; }
+.sub { margin-top: 12px; font-size: 13px; line-height: 1.5; color: #5c5c5c; }
+.link { margin-top: auto; align-self: center; font-size: 14px; font-weight: 600; color: #005fb8; padding: 6px 12px; border-radius: 6px; }
+
+.right { flex: 1; display: flex; flex-direction: column; padding: 40px 36px 28px 8px; min-width: 0; }
+.content { flex: 1; min-height: 0; }
+.buttons { display: flex; justify-content: flex-end; gap: 10px; }
+.btn {
+  min-width: 120px; padding: 9px 22px; border-radius: 5px; text-align: center; font-size: 14px; font-weight: 500;
+  background: #fbfbfb; border: 1px solid #d1d1d1; color: #1a1a1a;
+}
+.btn.primary { background: #005fb8; border-color: #005fb8; color: #fff; }
+.btn.disabled { background: #c5c5c5; border-color: #c5c5c5; color: #f3f3f3; }
+.btn.small { min-width: 0; padding: 5px 14px; font-size: 12px; margin-left: auto; }
+
+.list { list-style: none; border: 1px solid #e5e5e5; border-radius: 8px; padding: 6px; background: #fdfdfd; }
+.list li { position: relative; display: flex; align-items: center; gap: 12px; padding: 0 16px; height: 40px; border-radius: 5px; font-size: 14px; }
+.list li.sel { background: #e9eff7; font-weight: 500; }
+.list li.sel::before { content: ''; position: absolute; left: 4px; top: 12px; bottom: 12px; width: 3px; border-radius: 3px; background: #005fb8; }
+
+.nets li { height: 52px; }
+.nets li.sel { height: 60px; }
+.net-name { display: flex; flex-direction: column; line-height: 1.25; }
+.net-name small, .eth small { font-size: 11px; color: #6b6b6b; font-weight: 400; }
+.wifi-ico { width: 20px; height: 20px; color: #1a1a1a; flex: none; }
+.lock-ico { width: 12px; height: 12px; color: #6b6b6b; margin-left: -4px; }
+.eth { display: flex; align-items: center; gap: 12px; padding: 10px 22px; margin-bottom: 10px; font-size: 14px; color: #6b6b6b; }
+.eth span { display: flex; flex-direction: column; line-height: 1.25; }
+
+.empty { height: 100%; display: flex; align-items: center; justify-content: center; padding: 0 30px; text-align: center; font-size: 14px; line-height: 1.6; color: #5c5c5c; }
+
+.eula { position: relative; height: 100%; max-height: 380px; overflow: hidden; border: 1px solid #e5e5e5; border-radius: 8px; padding: 18px 26px 18px 20px; font-size: 12px; line-height: 1.6; color: #333; background: #fdfdfd; }
+.eula p { margin-top: 10px; }
+.eula .scroll { position: absolute; right: 6px; top: 10px; width: 4px; height: 90px; border-radius: 4px; background: #c4c4c4; }
+
+.field { display: flex; flex-direction: column; gap: 18px; padding-top: 70px; }
+.input, .select {
+  position: relative; display: flex; align-items: center; height: 44px; padding: 0 14px; border-radius: 5px;
+  border: 1px solid #d6d6d6; border-bottom: 2px solid #005fb8; background: #fff; font-size: 16px;
+}
+.select { border-bottom: 1px solid #d6d6d6; font-size: 14px; justify-content: space-between; }
+.chev { width: 16px; height: 16px; color: #5c5c5c; }
+.dots { letter-spacing: .2em; }
+.note { font-size: 12px; color: #6b6b6b; }
+
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 6px; border-bottom: 1px solid #ececec; font-size: 14px; }
+.toggle { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #444; }
+.toggle i { position: relative; width: 40px; height: 20px; border-radius: 10px; background: #005fb8; }
+.toggle i::after { content: ''; position: absolute; right: 4px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: #fff; }
+
+.caret { display: inline-block; width: 1.5px; height: 1.1em; margin-left: 2px; background: #fff; vertical-align: -2px; }
+.caret.dark { background: #1a1a1a; }
+
+/* Ventana de símbolo del sistema */
+.cmd { position: absolute; left: 150px; top: 150px; width: 640px; height: 290px; background: #0c0c0c; border: 1px solid #3a3a3a; border-radius: 8px; overflow: hidden; box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
+.cmd-bar { display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 12px; background: #1f1f1f; color: #e6e6e6; font-size: 12px; }
+.cmd-ico { font: 700 9px/1 Consolas, 'DejaVu Sans Mono', monospace; padding: 3px 4px; background: #2d2d2d; border: 1px solid #555; border-radius: 3px; }
+.cmd-ctrls { margin-left: auto; color: #bdbdbd; }
+.cmd pre { padding: 14px 16px; font: 15px/1.5 Consolas, 'Cascadia Mono', 'DejaVu Sans Mono', monospace; color: #cccccc; white-space: pre-wrap; }
+.cmd .typed { color: #fff; font-weight: 700; }
+
+/* Barra inferior de accesibilidad */
+.os-bar { position: absolute; left: 42px; right: 42px; bottom: 12px; display: flex; gap: 16px; color: #5c5c5c; font-size: 12px; }
+.os-bar svg { width: 16px; height: 16px; }
+
+/* Resaltado de CNA: lo que hay que elegir */
+.hl { outline: 3px solid #2d8cff; outline-offset: 3px; box-shadow: 0 0 0 9px rgba(45, 140, 255, .18); }
+.list li.hl { outline-offset: 1px; }
