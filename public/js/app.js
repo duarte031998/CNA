@@ -57,23 +57,25 @@
     return h('div', { class: 'header' }, brand(G.headerTag), progress(current));
   }
 
-  function laptop(img) {
-    return h('figure', { class: 'laptop' },
-      h('div', { class: 'laptop-screen' }, h('img', { src: img.src, alt: img.caption })),
-      h('div', { class: 'laptop-base' }),
-      h('figcaption', { text: img.caption }));
+  function zoomImg(img) {
+    var el = h('img', { src: img.src, alt: img.caption, class: 'zoomable', tabindex: '0', title: 'Toca para ampliar' });
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(el); }
+    });
+    return el;
   }
 
-  function portrait(img) {
-    return h('figure', { class: 'portrait' },
-      h('div', { class: 'portrait-frame' }, h('img', { src: img.src, alt: img.caption })),
+  function laptop(img) {
+    return h('figure', { class: 'laptop' },
+      h('div', { class: 'laptop-screen' }, zoomImg(img)),
+      h('div', { class: 'laptop-base' }),
       h('figcaption', { text: img.caption }));
   }
 
   function shots(imgs) {
     return h('div', { class: 'shots' }, imgs.map(function (img) {
       return h('figure', { class: 'shot' },
-        h('div', { class: 'shot-frame' }, h('img', { src: img.src, alt: img.caption })),
+        h('div', { class: 'shot-frame' }, zoomImg(img)),
         h('figcaption', { text: img.caption }));
     }));
   }
@@ -154,7 +156,7 @@
       s.keys && keys(s.keys),
       s.value && value(s.value),
       s.warning && warning(s.warning));
-    var media = s.images ? shots(s.images) : s.image.portrait ? portrait(s.image) : laptop(s.image);
+    var media = s.images ? shots(s.images) : laptop(s.image);
     var prev = n === 1 ? 'p-indice' : 'p-' + (n - 1);
     var last = n === TOTAL;
     p.append(
@@ -199,6 +201,7 @@
     Array.prototype.forEach.call(stage.children, function (el) {
       el.classList.toggle('is-active', el === active);
     });
+    window.scrollTo(0, 0);
     document.title = (idx === 0 ? '' : active.getAttribute('aria-label') + ' · ') + 'CNA Sistemas · Guía de configuración';
     try { localStorage.setItem('cna-guide-page', ids[idx]); } catch (e) { /* almacenamiento no disponible */ }
   }
@@ -225,13 +228,17 @@
   });
 
   // Gestos táctiles: deslizar a izquierda/derecha.
-  var touchX = null;
-  document.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+  // Solo cuenta un gesto claramente horizontal, para no interferir con el scroll vertical.
+  var touchX = null, touchY = null;
+  document.addEventListener('touchstart', function (e) {
+    touchX = e.touches[0].clientX; touchY = e.touches[0].clientY;
+  }, { passive: true });
   document.addEventListener('touchend', function (e) {
-    if (touchX === null) return;
+    if (touchX === null || document.querySelector('.lightbox')) return;
     var dx = e.changedTouches[0].clientX - touchX;
-    touchX = null;
-    if (Math.abs(dx) > 60) go(dx < 0 ? 1 : -1);
+    var dy = e.changedTouches[0].clientY - touchY;
+    touchX = touchY = null;
+    if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1);
   }, { passive: true });
 
   // --- Copiar valores (comando, nombre, contraseña, respuesta) ---
@@ -252,6 +259,33 @@
     }
   });
 
+  // --- Ampliar capturas (útil sobre todo en celulares) ---
+  stage.addEventListener('click', function (e) {
+    var img = e.target.closest('.laptop-screen img, .shot-frame img');
+    if (img) openLightbox(img);
+  });
+
+  function openLightbox(img) {
+    var closeBtn = h('button', { type: 'button', class: 'lightbox-close', 'aria-label': 'Cerrar' }, '✕');
+    var box = h('div', { class: 'lightbox', role: 'dialog', 'aria-modal': 'true', 'aria-label': img.alt },
+      h('img', { src: img.src, alt: img.alt }),
+      h('p', { text: img.alt + ' · Toca para cerrar' }),
+      closeBtn);
+    function close() {
+      box.remove();
+      document.removeEventListener('keydown', onKey, true);
+      img.focus();
+    }
+    function onKey(e) {
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      e.stopPropagation();
+    }
+    box.addEventListener('click', close);
+    document.addEventListener('keydown', onKey, true);
+    document.body.appendChild(box);
+    closeBtn.focus();
+  }
+
   function fallbackCopy(text) {
     var ta = h('textarea', { 'aria-hidden': 'true' });
     ta.value = text;
@@ -262,12 +296,5 @@
     ta.remove();
   }
 
-  // --- Escalado del escenario 1920×1080 a la ventana ---
-  function fit() {
-    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
-    stage.style.transform = 'scale(' + s + ')';
-  }
-  window.addEventListener('resize', fit);
-  fit();
   show();
 })();

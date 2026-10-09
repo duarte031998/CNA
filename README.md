@@ -4,7 +4,8 @@ Guía interactiva de 14 pantallas (portada, índice, 11 pasos y cierre) para la 
 
 ## Funciones
 
-- Escenario de 1920×1080 que se escala a cualquier pantalla.
+- Responsive: en computadores y TV mantiene el diseño de presentación a pantalla completa; en celulares, tablets en vertical y ventanas angostas el contenido se apila, se desplaza verticalmente y los botones Anterior/Siguiente quedan fijos abajo.
+- Las capturas se amplían a pantalla completa al tocarlas (o con Enter).
 - Navegación con los botones, la barra de progreso, el índice, las flechas ← → del teclado (también Inicio/Fin) o deslizando en pantallas táctiles.
 - Cada pantalla tiene su propio enlace (`#p-1` … `#p-11`, `#p-indice`, `#p-fin`) y la guía recuerda en qué pantalla se quedó el usuario.
 - El comando, el nombre del equipo, la contraseña y la respuesta de seguridad se copian con un clic.
