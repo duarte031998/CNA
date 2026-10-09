@@ -68,7 +68,7 @@ module.exports = [
     html: screen({
       icon: 'flag',
       title: '¿Es este el país o región correcto?',
-      body: list(['Guatemala', 'Honduras', 'México', 'Nicaragua', 'Panamá', 'Paraguay', 'Perú'], 2, 2),
+      body: list(['Bolivia', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Ecuador', 'El Salvador'], 2, 2),
       buttons: btn('Sí', 'primary')
     })
   },
